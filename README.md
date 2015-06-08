@@ -24,7 +24,7 @@ calling this function returns another `Function(names)`
 
 | Parameter | Type    | Usage                                   |
 | --------: | ------- | :-------------------------------------- |
-| names     | array   | names of the packages you want to compile  |
+| names     | array   | names of the packages you want to compile (will be converted to kebab case) |
 
 calling this function which will search in the `src` path of your package `for name in names` for `#{name}.vue` and compile it to `#{name}.js` and save it into the `compiled` path of your package.
 
@@ -33,7 +33,7 @@ This function returns a promise, which will be fulfilled when all files have bee
 ## Example
 ```coffee
 compile = require("atom-vue-component-compiler")(packageName:"your-package-name")
-compile ["nestedComp","mainApp"]
+compile ["nested-comp","mainApp"] # will search for nested-comp.vue and main-app.vue
 .then ->
   # everything successfully compiled
   # could load with "atom-vue-component-loader"
@@ -45,7 +45,8 @@ compile ["nestedComp","mainApp"]
 
 ## Release History
 
- - *v0.0.1*: First Release
+ - *v0.0.2*: Converted to kebab naming
+ - *v0.0.1*: First release
 
 ## License
 Copyright (c) 2015 Paul Pflugradt

@@ -1,7 +1,7 @@
 {
   "name": "atom-vue-component-compiler",
   "description": "compiles a vue component with the help of vue-component-compiler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/paulpflug/",
   "author": {
     "name": "Paul Pflugradt",
