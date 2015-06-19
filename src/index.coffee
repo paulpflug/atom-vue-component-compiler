@@ -4,8 +4,6 @@ compiler = require "vue-component-compiler"
 {Directory} = require "atom"
 Promise = require "bluebird"
 
-vcCompiler = null
-
 decamelize = (str) ->
   str.replace /\B([A-Z]{1})/g, (match, chr) ->
     "-#{chr.toLowerCase()}"
@@ -27,19 +25,17 @@ module.exports = (options) ->
   packageName = options.packageName
   srcFolder = options.src ? "components"
   compiledFolder = options.compiled ? "components_compiled"
-  return new class VCCompiler
-    constructor: ->
-      vcCompiler ?= (names) ->
-        dir = new Directory(atom.packages.resolvePackagePath(packageName))
-        compiled = []
-        for name in names
-          name = decamelize(name)
-          file = dir.getSubdirectory(srcFolder).getFile("#{name}.vue")
-          unless file.existsSync()
-            promise = Promise.reject(new Error "#{srcFolder}/#{name}.vue doesn't exsist")
-          else
-            compiledFile = dir.getSubdirectory(compiledFolder).getFile("#{name}.js")
-            promise = promiseGenerator file, compiledFile
-          compiled.push promise
-        Promise.all compiled
-      return vcCompiler
+  return (names) ->
+    dir = new Directory(atom.packages.resolvePackagePath(packageName))
+    compiled = []
+    for name in names
+      name = decamelize(name)
+      file = dir.getSubdirectory(srcFolder).getFile("#{name}.vue")
+      console.log file
+      unless file.existsSync()
+        promise = Promise.reject(new Error "#{srcFolder}/#{name}.vue doesn't exsist")
+      else
+        compiledFile = dir.getSubdirectory(compiledFolder).getFile("#{name}.js")
+        promise = promiseGenerator file, compiledFile
+      compiled.push promise
+    Promise.all compiled
