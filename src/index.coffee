@@ -31,7 +31,6 @@ module.exports = (options) ->
     for name in names
       name = decamelize(name)
       file = dir.getSubdirectory(srcFolder).getFile("#{name}.vue")
-      console.log file
       unless file.existsSync()
         promise = Promise.reject(new Error "#{srcFolder}/#{name}.vue doesn't exsist")
       else
